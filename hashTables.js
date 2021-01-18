@@ -50,7 +50,7 @@ class HashTable {
 //   return b.score - a.score;
 // };
 
-const gradesA = students.filter((studentA) => studentA.score > 90);
+const gradesA = students.forEach((studentA) => studentA.score > 90);
 const gradesB = students.filter((studentB) => studentB.score > 80);
 
 console.log(gradesA);

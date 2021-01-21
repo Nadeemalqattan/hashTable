@@ -1,3 +1,5 @@
+const prompt = require("prompt-sync")({ sigint: true });
+
 const students = [
   { name: "Jean-Luc Garza", score: 24 },
   { name: "Teddy Munoz", score: 79 },
@@ -33,25 +35,33 @@ class HashTable {
     this.classSize = classSize;
     this.classes = { A: [], B: [], C: [], D: [], Other: [] };
   }
+
+  hash = (score) => {
+    if (score >= 90) {
+      return "A";
+    } else if (score >= 80) {
+      return "B";
+    } else if (score >= 70) {
+      return "C";
+    } else if (score >= 60) {
+      return "D";
+    } else {
+      return "Other";
+    }
+  };
+
+  insert = (name, score) => {
+    const classroom = this.hash(score);
+    if (this.classes[classroom].length < this.classSize)
+      this.classes[classroom].push(name);
+  };
 }
 
-// if (score >= 90) {
-// //   return (this.classes = "A");
-// // } else if (score >= 80) {
-// //   return (this.classes = "B");
-// // } else if (score >= 70) {
-// //   return (this.classes = "C");
-// // } else if (score >= 60) {
-// //   return (this.classes = "D");
-// // } else score < 50;
-// // return (this.classes = "won’t be joining any class");
+const size = prompt("How many noobs can be in one class?");
+const table = new HashTable(size);
 
-// const comparator = (a, b) => {
-//   return b.score - a.score;
-// };
+students.forEach((student) => {
+  table.insert(student.name, student.score);
+});
 
-const gradesA = students.forEach((studentA) => studentA.score > 90);
-const gradesB = students.filter((studentB) => studentB.score > 80);
-
-console.log(gradesA);
-console.log(gradesB);
+console.table(table.classes);
